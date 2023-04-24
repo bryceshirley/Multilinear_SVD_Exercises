@@ -19,7 +19,7 @@ function [U,S,V] = svdABTranspose(A,B)
     M = Ra*Rb';
     
     % Calculate SVD of M
-    [Um,Sm,Vm] = svd(M);
+    [Um,Sm,Vm] = svd(M,"econ");
   
     % Calculate function Ouputs
     U = Qa*Um;
