@@ -122,10 +122,10 @@ I1=100; I2=200; I3=300;
 
 X = xTensor(I1,I2,I3);
 
-%% Question 2-5 Multilinear SVD
+%% Question 2-4 Multilinear SVD
 disp(' ')
 disp('~~~~~~~')
-disp('Qu2-5) ')
+disp('Qu2-4) ')
 disp('~~~~~~~')
 disp(' ')
 disp('Computation time for Multilinear SVD:')
