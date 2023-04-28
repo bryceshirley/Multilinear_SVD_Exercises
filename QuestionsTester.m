@@ -3,7 +3,7 @@
 % Various comments have been added to provided an explanation of the theory
 % with in this file and the functions accossiated with it.
 
-% These Questions were designed by Hussam Al Daas and implementented by Bryce 
+% These Questions were designed by Hussam Al Daas and  implemented by Bryce 
 % Shirley with help from Hussam Al Daas.
 
 % Question 1 - various implementations of the SVD is used to compute the SVD 
