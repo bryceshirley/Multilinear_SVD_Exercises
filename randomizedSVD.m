@@ -22,10 +22,10 @@ function [U,S,V] = randomizedSVD(A,r)
     AX = A*X;
 
     % 3. Calculate the QR decomposition of AX=QR
-    [Q,~] = qr(AX);
+    [Q,~] = qr(AX,'econ');
     
     % 4. Find rank-r approximation of the SVD. A \approx QQ'A.
-    [U0,S,V] = svd(Q'*A);
+    [U0,S,V] = svd(Q'*A,'econ');
 
     U = Q*U0;
 end

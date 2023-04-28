@@ -17,12 +17,13 @@ function [U,S,V] = svdABTranspose(A,B)
     % rectangular lower triangular Rb transpose. This takes far fewer operations than A
     % multiplied by B transpose.
     M = Ra*Rb';
-    
-    % Calculate SVD of M
+
+    % Calculate SVD of square matrix M
     [Um,Sm,Vm] = svd(M);
-  
+
     % Calculate function Ouputs
     U = Qa*Um;
     S = Sm;
     V = Qb*Vm;
+
 end 

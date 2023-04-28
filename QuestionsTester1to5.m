@@ -1,0 +1,157 @@
+%% Question 1
+%% Question 1 - part 1
+disp('~~~~~~~')
+disp('Qu1) i.')
+disp('~~~~~~~')
+disp(' ')
+
+m=1000;
+n=100;
+
+A = randn(m,n);
+B = randn(m,n);
+
+disp('Time to Compute Classic SVD - calculate AB^T directly.')
+tic;
+X = A*B';
+[U,S,V]=svd(X,'econ');
+toc;
+
+disp('Time to Compute SVD with QR - calculate AB^T not directly.')
+tic;
+[U,S,V]=svdABTranspose(A,B);
+toc;
+
+% Computing the standard SVD by first computing A*B' directly cost
+% considerably more computational time and takes much more memory. Matlab
+% is unable to store a matrix if the number of columns m are a couple of
+% orders of magnitude larger.
+% The computation of A*B' is also numerically unstable due to round off
+% error.
+% For these reasons A*B' should never be computed.
+% Using the QR method as seen in function [U,S,V]=svdABTranspose(A,B)
+% drastically improves these properties.
+
+
+m=10^5;
+n=100;
+
+A = randn(m,n);
+B = randn(m,n);
+
+disp('Time to Compute SVD with QR - calculate AB^T not directly. Much larger A and B.')
+QRstart=tic;
+[Uqr,Sqr,Vqr]=svdABTranspose(A,B);
+QRtime=toc(QRstart);
+disp(['Elapsed time is ', num2str(QRtime) ,' seconds.'])
+% There m was too large for MATLABs memory when computing AB' directly,
+% however, the svd was computed in approx 0.25s when using the QR
+% decomposition.
+%% Question 1 -part 2
+disp('~~~~~~~~')
+disp('Qu1) ii.')
+disp('~~~~~~~~')
+disp(' ')
+
+disp('Time to Compute Classic SVD of A.')
+tic;
+[U,S,V]=svd(A,'econ');
+toc;
+
+% When using the random svd we want to choose parameter r so that we can
+% approximate a rank-r matrix. This will later be down by introduceing
+% another parameter p where we use r+p to generate a guassian matrix, which
+% is called over sampling. For now we will just pick r << n.
+
+% Random matrix columns parameter r:
+r = 10;  % r<<n
+disp('Time to Compute Randomized SVD of matrix A.')
+tic;
+[Ur,Sr,Vr] = randomizedSVD(A,r);
+toc;
+
+% Relative Frobenius Norm of randomized approximation of A. 
+% Approximation of A 
+Ar = Ur*(Sr*Vr');
+
+disp('Relative Frobenius norm of randomized svd approximation of A')
+relativeFrobeniusNorm = norm(A-Ar, 'fro')/norm(A,'fro');
+disp(relativeFrobeniusNorm);
+%% Question 1 -part 3
+disp('~~~~~~~~~')
+disp('Qu1) iii.')
+disp('~~~~~~~~~')
+
+disp('Recall the time to compute the SVD using QR Method of AB^T:')
+disp(['Elapsed time was ', num2str(QRtime) ,' seconds.'])
+
+
+disp('Time to Compute randomized SVD of matrix AB^T.')
+tic;
+[Ur,Sr,Vr] = randomizedSvdABTranspose(A,B,r);
+toc;
+
+% I know this is wrong but what is the alternative?
+% Recall: ||A||_fro equals ||S||_fro where ||.||_fro is the Frobenius Norm.
+% relativeFrobeniusNorm = norm(diag(Sr)-diag(Sqr), 'fro')/norm(diag(Sqr),'fro'); 
+% disp(relativeFrobeniusNorm);
+
+%% Construct Matrix X for Questions 2 to 5
+I1=100; I2=200; I3=300;
+
+X = xTensor(I1,I2,I3);
+
+%% Qu2 Compute G= X *_1 U1' *_2 U2' *_3 U3'
+
+% Using Classic svd
+[U1,S1,V1] = ComputeSVDUnfoldedxTensor(X,1); % mode-1
+[U2,S2,V2] = ComputeSVDUnfoldedxTensor(X,2); % mode-2
+[U3,S3,V3] = ComputeSVDUnfoldedxTensor(X,3); % mode-3
+
+% Compute G
+G1 = TensorMatrixProduct(X,U1',1);
+G2 = TensorMatrixProduct(G1,U2',2);
+G = TensorMatrixProduct(G2,U3',3);
+%% Qu3 Compute Y= G *_1 U1 *_2 U2 _3 U3
+
+% Compute Y
+Y1 = TensorMatrixProduct(G,U1,1);
+Y2 = TensorMatrixProduct(Y1,U2,2);
+Y = TensorMatrixProduct(Y2,U3,3);
+
+%% Qu4 Compute X-Y
+disp(' ')
+disp('~~~~~~~')
+disp('Qu4) Relative Frobenius Norm')
+disp('~~~~~~~')
+disp(' ')
+relativeFrobeniusNorm = norm(X-Y, 'fro')/norm(X,'fro');
+disp(relativeFrobeniusNorm)
+
+%% Qu5
+% Define tau
+tau = 1e-10;
+
+% Using truncated svd
+[Ut1,St1,Vt1] = ComputeTruncatedSVDUnfoldedxTensor(X,tau,1); % mode-1
+[Ut2,St2,Vt2] = ComputeTruncatedSVDUnfoldedxTensor(X,tau,2); % mode-2
+[Ut3,St3,Vt3] = ComputeTruncatedSVDUnfoldedxTensor(X,tau,3); % mode-3
+
+% Compute G
+G1 = TensorMatrixProduct(X,Ut1',1);
+G2 = TensorMatrixProduct(G1,Ut2',2);
+G = TensorMatrixProduct(G2,Ut3',3);
+
+% Compute Y
+Y1 = TensorMatrixProduct(G,Ut1,1);
+Y2 = TensorMatrixProduct(Y1,Ut2,2);
+Y = TensorMatrixProduct(Y2,Ut3,3);
+
+% Compute the relative Frobenius Norm between X and truncated Y
+disp(' ')
+disp('~~~~~~~')
+disp('Qu5) Relative Frobenius Norm')
+disp('~~~~~~~')
+disp(' ')
+relativeFrobeniusNorm = norm(X-Y, 'fro')/norm(X,'fro');
+disp(relativeFrobeniusNorm)
