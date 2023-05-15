@@ -1,8 +1,24 @@
-%% ~~~ Multilinear SVD Exercise Function Tester ~~~
+%% ~~~ Multilinear SVD Exercise Function Test File ~~~
 
 % Various comments have been added to provided an explanation of the theory
 % with in this file and the functions accossiated with it.
 
+% These Questions were designed by Hussam Al Daas and  implemented by Bryce 
+% Shirley with help from Hussam Al Daas.
+
+% Question 1 - various implementations of the SVD is used to compute the SVD 
+% of the matrix product AB^T and a function is created to find the mode-n 
+% unfoldings of a 3D tensors.
+
+% Question 2-4 - An implenetation of the Multilinear SVD outlined in "A 
+% MULTILINEAR SINGULAR VALUE DECOMPOSITION" by LIEVEN DE LATHAUWER, BART DE 
+% MOOR and JOOS VANDEWALLE.
+
+% Question 5 - An implementation of Questions 2-4 Multilinear SVD with the 
+% the extension of Truncated SVDs.
+
+% Question 6 - An implementation of Questions 2-4 Multilinear SVD with the 
+% the extension of Randomized Truncated SVDs.
 
 %% Question 1 - part 1
 disp('~~~~~~~')
@@ -106,10 +122,10 @@ I1=100; I2=200; I3=300;
 
 X = xTensor(I1,I2,I3);
 
-%% Question 2-5 Multilinear SVD
+%% Question 2-4 Multilinear SVD
 disp(' ')
 disp('~~~~~~~')
-disp('Qu2-5) ')
+disp('Qu2-4) ')
 disp('~~~~~~~')
 disp(' ')
 disp('Computation time for Multilinear SVD:')
