@@ -1,4 +1,4 @@
-function [U,S,V] = randomizedSVD(A,r)
+function [U,S,V] = RandomizedSVD(A,r)
 % Function that calculates the rank-r approximation of matrix A using the
 % HMT Randomised SVD Algorithm. 
 % Inputs (Matrices):

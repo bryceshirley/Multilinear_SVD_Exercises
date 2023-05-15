@@ -1,4 +1,4 @@
-function [U,S,V] = svdABTranspose(A,B)
+function [U,S,V] = SvdABTranspose(A,B)
 % Function that calculates the SVD of the product of matrices A and B
 % transpose.
 % Inputs (Matrices):

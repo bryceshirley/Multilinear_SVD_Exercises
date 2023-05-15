@@ -1,4 +1,4 @@
-function [U,S,V] = randomizedSvdABTranspose(A,B,r)
+function [U,S,V] = RandomizedSvdABTranspose(A,B,r)
 % Function that calculates the SVD of the product of matrices A and B
 % transpose.
 % Inputs (Matrices):
